@@ -72,6 +72,7 @@ namespace ZDAT
             public string CustFrom { get; set; }
         }
 
+        #region Main_Window
         //Main Window initialization
         public MainWindow()
         {
@@ -107,6 +108,7 @@ namespace ZDAT
                 ZDAT.Properties.Settings.Default.Save();
             }
         }
+        #endregion
 
         #region tabOrderEntry
         private void tabOrderEntry_Loaded(object sender, RoutedEventArgs e)
@@ -115,14 +117,14 @@ namespace ZDAT
             txtBranch.Text = Branch;
         }
 
-        private void txtBranch_LostFocus(object sender, RoutedEventArgs e)
-        {
-            Branch = txtBranch.Text;
-        }
-
         private void tabOrderEntry_GotFocus(object sender, RoutedEventArgs e)
         {
             MainWindow1.Width = 630;
+        }
+
+        private void txtBranch_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Branch = txtBranch.Text;
         }
 
         private void imgDrop_Drop(object sender, DragEventArgs e)
@@ -186,13 +188,9 @@ namespace ZDAT
         private void chkEDI_Checked(object sender, RoutedEventArgs e)
         {
             if (chkEDI.IsChecked == true)
-            {
                 EDIEnabled = true;
-            }
             else
-            {
                 EDIEnabled = false;
-            }
         }
 
         private void txtCustTo_GotFocus(object sender, RoutedEventArgs e)
@@ -289,7 +287,7 @@ namespace ZDAT
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             Automation ae = new Automation();
-
+             
             e.Result = ae.EnterOrders((IEnumerable<OpenXMLReader.Order>)e.Argument, LineCount, EDIEnabled, branch, worker, e);
         }
 
