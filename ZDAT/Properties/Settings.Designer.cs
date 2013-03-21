@@ -34,5 +34,17 @@ namespace ZDAT.Properties {
                 this["Branch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Acuthin {
+            get {
+                return ((string)(this["Acuthin"]));
+            }
+            set {
+                this["Acuthin"] = value;
+            }
+        }
     }
 }

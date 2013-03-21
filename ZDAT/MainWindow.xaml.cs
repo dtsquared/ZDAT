@@ -21,6 +21,7 @@ using System.Collections.Specialized;
 using System.Windows.Threading;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace ZDAT
 {
@@ -203,16 +204,22 @@ namespace ZDAT
         #region tabOptions
         private void tabOptions_GotFocus(object sender, RoutedEventArgs e)
         {
-            MainWindow1.Width = 460;
+            MainWindow1.Width = 500;
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
+            Regex rx = new Regex(@"^(?:[a-zA-Z]\:|\\\\[\w\.]+\\[\w.]+)\\(?:[\w]+\\)*\w([\w.])+\\acuthin\.exe$");
+
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.ShowDialog();
             txtAcuthinPath.Text = dlg.FileName;
-        }
 
+            if (rx.IsMatch(txtAcuthinPath.Text))
+                txtAcuthinPath.ClearValue(TextBox.BorderBrushProperty);
+            else
+                txtAcuthinPath.BorderBrush = Brushes.Red;
+        }
         #endregion
 
         #region bgWorker_EDI
@@ -254,7 +261,7 @@ namespace ZDAT
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             Automation ae = new Automation();
-             
+
             e.Result = ae.EnterOrders((IEnumerable<OpenXMLReader.Order>)e.Argument, LineCount, EDIEnabled, branch, worker, e);
         }
 
@@ -301,8 +308,5 @@ namespace ZDAT
             for (int i = 0; i < childhWnd.Count; i++)
                 PInvoke.MH.sendString(childhWnd[i], i.ToString());
         }
-
-
-
     }
 }
