@@ -7,8 +7,8 @@
         Title="ZD Automation Tool" Height="395" Width="630" MinWidth="192" MinHeight="373" ResizeMode="CanMinimize" Closing="MainWindow1_Closing">
 
     <Grid>
-        <TabControl x:Name="TabControl1" Foreground="{DynamicResource IndicatorBrush}">
-            <TabItem x:Name="tabOrderEntry" Header="Order Entry" GotFocus="tabOrderEntry_GotFocus" Loaded="tabOrderEntry_Loaded">
+        <TabControl x:Name="TabControl1">
+            <TabItem x:Name="tabOrderEntry" Header="Order Entry" GotFocus="tabOrderEntry_GotFocus" Loaded="tabOrderEntry_Loaded" IsSelected="True">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="dgDisplay" Margin="0,0,166,21" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" EnableRowVirtualization="False" />
                     <ProgressBar x:Name="ProgressBar1" Margin="3,0,168,6" Height="10" VerticalAlignment="Bottom"/>
@@ -46,6 +46,13 @@
                     <Button x:Name="btnRevertMap" Content="Revert" HorizontalAlignment="Left" Margin="355,44,0,0" VerticalAlignment="Top" Width="75"/>
                     <TextBox x:Name="txtWindowName" HorizontalAlignment="Left" Height="23" Margin="104,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246" Text="3615 - Sales Order Management - New"/>
                     <Label x:Name="lblWindowName" Content="Window Name" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabOptions" Header="Options" GotFocus="tabOptions_GotFocus">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="txtAcuthinPath" Height="23" Margin="108,10,90,0" VerticalAlignment="Top"/>
+                    <Button x:Name="btnBrowse" Content="Browse" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="btnBrowse_Click"/>
+                    <Label Content="Path to Acuthin:" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="98"/>
                 </Grid>
             </TabItem>
         </TabControl>

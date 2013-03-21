@@ -200,6 +200,21 @@ namespace ZDAT
         }
         #endregion
 
+        #region tabOptions
+        private void tabOptions_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MainWindow1.Width = 460;
+        }
+
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.ShowDialog();
+            txtAcuthinPath.Text = dlg.FileName;
+        }
+
+        #endregion
+
         #region bgWorker_EDI
         private void bgWorkerEDI_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -277,6 +292,7 @@ namespace ZDAT
         }
         #endregion
 
+
         private void btnMapScreen_Click(object sender, RoutedEventArgs e)
         {
             IntPtr hWnd = PInvoke.Win.GetHandle(txtWindowName.Text);
@@ -285,6 +301,8 @@ namespace ZDAT
             for (int i = 0; i < childhWnd.Count; i++)
                 PInvoke.MH.sendString(childhWnd[i], i.ToString());
         }
+
+
 
     }
 }
