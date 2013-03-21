@@ -98,19 +98,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="API.cs" />
-    <Compile Include="ListBoxWithIndicator.xaml.cs">
-      <DependentUpon>ListBoxWithIndicator.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SendMail.cs" />
     <Compile Include="ZD.cs" />
-    <Page Include="ListBoxWithIndicator.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ListBoxWithIndicatorStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -4,21 +4,9 @@
         xmlns:PInvoke="clr-namespace:PInvoke" x:Name="MainWindow1" x:Class="ZDAT.MainWindow"
         xmlns:local="clr-namespace:ZDAT"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="ZD Automation Tool" Height="395" Width="630" MinWidth="192" MinHeight="373" ResizeMode="NoResize" Closing="MainWindow1_Closing">
+        Title="ZD Automation Tool" Height="395" Width="630" MinWidth="192" MinHeight="373" ResizeMode="CanMinimize" Closing="MainWindow1_Closing">
 
     <Grid>
-        <Grid.Resources>
-            <ResourceDictionary>
-                <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="ListBoxWithIndicatorStyle.xaml" />
-                </ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary>
-        </Grid.Resources>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
         <TabControl x:Name="TabControl1" Foreground="{DynamicResource IndicatorBrush}">
             <TabItem x:Name="tabOrderEntry" Header="Order Entry" GotFocus="tabOrderEntry_GotFocus" Loaded="tabOrderEntry_Loaded">
                 <Grid Background="#FFE5E5E5">
@@ -33,15 +21,6 @@
                     <CheckBox x:Name="chkEDI" Content="EDI Enabled Customer" HorizontalAlignment="Left" Margin="463,87,0,0" VerticalAlignment="Top" Checked="chkEDI_Checked" IsEnabled="False"/>
                     <Label x:Name="lblBranch" Content="Branch:" HorizontalAlignment="Right" Margin="0,2,116,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtBranch" HorizontalAlignment="Right" Height="23" Margin="0,4,7,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" TextAlignment="Center" MaxLength="4" LostFocus="txtBranch_LostFocus"/>
-                </Grid>
-            </TabItem>
-
-            <TabItem x:Name="tabSWQ" Header="SWQ" GotFocus="tabSWQ_GotFocus" IsEnabled="False">
-                <Grid Background="#FFE5E5E5">
-                    <Border BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1,0,0,0" Grid.Row="1" Margin="4">
-                        <local:ListBoxWithIndicator x:Name="_listBoxWithIndicator" Margin="-1,0,0,0" HorizontalAlignment="Left" Width="251" IndicatorBrush="{DynamicResource IndicatorBrush}" />
-                    </Border>
-                    <Button x:Name="btnSWQ" Content="Next Range" Margin="259,4,4,4" Click="btnSWQ_Click" IsDefault="True"/>
                 </Grid>
             </TabItem>
 

@@ -52,8 +52,6 @@ namespace ZDAT
         private BackgroundWorker bgWorkerSOM = new BackgroundWorker();
         private BackgroundWorker bgWorkerEDI = new BackgroundWorker();
 
-        private ObservableCollection<string> lbSource = new ObservableCollection<string>(); //SWQ ListBox source
-
         private IEnumerable<OpenXMLReader.Order> Orders { get; set; }   //SOM order collection
         private List<OpenXMLReader.Order> orders { get; set; }  //SOM order converted to list
 
@@ -91,10 +89,6 @@ namespace ZDAT
             bgWorkerEDI.WorkerSupportsCancellation = true;
             #endregion
 
-            #region SWQ_Listbox_Binding
-            _listBoxWithIndicator.ListBox.ItemsSource = lbSource;
-            _listBoxWithIndicator.ListBox.SelectionMode = SelectionMode.Multiple;
-            #endregion
         }
 
         private void MainWindow1_Closing(object sender, CancelEventArgs e)
@@ -203,45 +197,6 @@ namespace ZDAT
         private void txtEmail_GotFocus(object sender, RoutedEventArgs e)
         {
             btnAddEmail.IsDefault = true;
-        }
-        #endregion
-
-        #region tabSWQ
-        private void tabSWQ_GotFocus(object sender, RoutedEventArgs e)
-        {
-            MainWindow1.Width = 360;
-        }
-
-        private void btnSWQ_Click(object sender, RoutedEventArgs e)
-        {
-
-            string lastString = TextFileRW.GetSWQ();
-            int lbItems;
-
-            if (lastString != null)
-            {
-
-                int lastValue = Int32.Parse(lastString);
-                int maxLoop = lastValue + 6;
-
-                for (int i = lastValue + 1; i < maxLoop; i++)
-                {
-                    lbSource.Add(i.ToString());
-                    lastString = i.ToString();
-                }
-            }
-            else
-            {
-                for (int i = 1; i < 7; i++)
-                {
-                    lbSource.Add(i.ToString());
-                    lastString = i.ToString();
-                }
-            }
-            TextFileRW.WriteSWQ(lastString);
-            lbItems = _listBoxWithIndicator.ListBox.Items.Count - 1;
-
-            _listBoxWithIndicator.ListBox.ScrollIntoView(_listBoxWithIndicator.ListBox.Items[lbItems]);
         }
         #endregion
 
