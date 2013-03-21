@@ -315,10 +315,14 @@ namespace ZDAT
                             #region Customer
                             if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Customer]) == "")
                             {
-                                MH.sendString(OPchildhWnd[(int)OP.Customer], o.Customer);
-                                MH.sendKey(OPchildhWnd[(int)OP.Customer], Keys.Enter, true);
-                                lastPO = o.PONumber;
-                                newOrder = true;
+                                do
+                                {
+                                    MH.sendString(OPchildhWnd[(int)OP.Customer], o.Customer);
+                                    MH.sendKey(OPchildhWnd[(int)OP.Customer], Keys.Enter, true);
+                                    lastPO = o.PONumber;
+                                    newOrder = true;
+                                }
+                                while (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Customer]) != o.Customer);
 
                                 do
                                 {
@@ -879,7 +883,7 @@ namespace ZDAT
                 if (Win.IsChecked(childhWnd[(int)OP.SO]) == true)
                 {
                     EMail email = new EMail();
-                    email.Send(new string[]{"treische@wesco.com"}, "C# email test", "Testing OSR program");
+                    email.Send(new string[] { "treische@wesco.com" }, "C# email test", "Testing OSR program");
 
                 }
                 //lastSalesOrder = salesOrder;
@@ -947,6 +951,7 @@ namespace ZDAT
                 return false;
             }
         }
+
     } //automation class
 
     public struct SalesOrder

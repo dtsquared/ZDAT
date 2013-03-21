@@ -36,7 +36,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem x:Name="tabSWQ" Header="SWQ" GotFocus="tabSWQ_GotFocus">
+            <TabItem x:Name="tabSWQ" Header="SWQ" GotFocus="tabSWQ_GotFocus" IsEnabled="False">
                 <Grid Background="#FFE5E5E5">
                     <Border BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1,0,0,0" Grid.Row="1" Margin="4">
                         <local:ListBoxWithIndicator x:Name="_listBoxWithIndicator" Margin="-1,0,0,0" HorizontalAlignment="Left" Width="251" IndicatorBrush="{DynamicResource IndicatorBrush}" />

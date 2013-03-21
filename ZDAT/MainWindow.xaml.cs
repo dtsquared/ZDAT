@@ -40,14 +40,11 @@ namespace ZDAT
             set
             {
                 if (value.Length < 4)
-                {
                     MessageBox.Show("Branch number must be 4 digits");
-                }
                 else
                     branch = ZDAT.Properties.Settings.Default.Branch;
             }
         }
-
         #endregion
 
         #region Private_Variables
