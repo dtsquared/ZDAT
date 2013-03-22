@@ -22,6 +22,7 @@ using System.Windows.Threading;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace ZDAT
 {
@@ -205,7 +206,6 @@ namespace ZDAT
         private void tabOptions_GotFocus(object sender, RoutedEventArgs e)
         {
             MainWindow1.Width = 515;
-            CheckAcuthinPath();
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -216,15 +216,36 @@ namespace ZDAT
             CheckAcuthinPath();
         }
 
+        private void txtAcuthinPath_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            CheckAcuthinPath();
+        }
+
         private void CheckAcuthinPath()
         {
-            Regex rx = new Regex(@"^(?:[A-Za-z]\:\\|\\\\[\w.]+\\)(?:[\w .]*\\)*acuthin\.exe$");
+            Regex rxFilePath = new Regex(@"^(?:[A-Za-z]\:\\|\\\\[\w.]+\\)(?:[^ ][\w .]*\\)*(?i:acuthin\.exe)$");
+            string pathTxt = txtAcuthinPath.Text;
+            char lastChar;
 
-            if (!rx.IsMatch(txtAcuthinPath.Text) && txtAcuthinPath.Text != "")
+            if (pathTxt != "")
+            {
+                Char.TryParse(pathTxt.Substring(pathTxt.Length - 1), out lastChar);
+                if (!Char.IsLetter(lastChar))
+                {
+                    pathTxt = pathTxt.Substring(0, pathTxt.Length - 1);
+                    txtAcuthinPath.Text = pathTxt;
+                }
+            }
+
+            if (!rxFilePath.IsMatch(pathTxt) && pathTxt != "")
                 txtAcuthinPath.BorderBrush = Brushes.Red;
             else
+            {
                 txtAcuthinPath.ClearValue(TextBox.BorderBrushProperty);
-
+                ZDAT.Properties.Settings.Default.Acuthin = txtAcuthinPath.Text;
+                if (pathTxt != "" && !File.Exists(pathTxt))
+                    txtAcuthinPath.BorderBrush = Brushes.Red;
+            }
         }
         #endregion
 

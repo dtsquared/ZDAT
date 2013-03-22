@@ -50,15 +50,15 @@
             </TabItem>
             <TabItem x:Name="tabOptions" Header="Options" GotFocus="tabOptions_GotFocus">
                 <Grid Background="#FFE5E5E5">
-                    <TextBox x:Name="txtAcuthinPath" Height="23" Margin="98,82,119,0" VerticalAlignment="Top" IsReadOnly="True"/>
+                    <TextBox x:Name="txtAcuthinPath" Height="23" Margin="98,82,119,0" VerticalAlignment="Top" LostKeyboardFocus="txtAcuthinPath_LostKeyboardFocus"/>
                     <Button x:Name="btnBrowse" Content="Browse" Margin="0,82,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="104" Click="btnBrowse_Click" TabIndex="1"/>
                     <Label x:Name="lblAcuthin" Content="Acuthin Path :" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.607"/>
                     <Label x:Name="lblUser" Content="User Name :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="18,10,0,0"/>
                     <TextBox x:Name="txtUser" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,12,119,0"/>
                     <Label x:Name="lblPassword" Content="Password :" VerticalAlignment="Top" Margin="27,44,0,0" HorizontalAlignment="Left" Width="66"/>
                     <PasswordBox x:Name="psbPassword" Margin="98,47,119,0" VerticalAlignment="Top" Height="23"/>
-                    <CheckBox Content="Save User Name" HorizontalAlignment="Right" Margin="0,15,10,0" VerticalAlignment="Top"/>
-                    <CheckBox Content="Save Password" HorizontalAlignment="Right" Margin="0,49,19,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="chkSaveUser" Content="Save User Name" HorizontalAlignment="Right" Margin="0,15,10,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="chkSavePass" Content="Save Password" HorizontalAlignment="Right" Margin="0,49,19,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>
