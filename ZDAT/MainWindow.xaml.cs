@@ -204,21 +204,27 @@ namespace ZDAT
         #region tabOptions
         private void tabOptions_GotFocus(object sender, RoutedEventArgs e)
         {
-            MainWindow1.Width = 500;
+            MainWindow1.Width = 515;
+            CheckAcuthinPath();
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
-            Regex rx = new Regex(@"^(?:[a-zA-Z]\:|\\\\[\w\.]+\\[\w.]+)\\(?:[\w]+\\)*\w([\w.])+\\acuthin\.exe$");
-
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.ShowDialog();
             txtAcuthinPath.Text = dlg.FileName;
+            CheckAcuthinPath();
+        }
 
-            if (rx.IsMatch(txtAcuthinPath.Text))
-                txtAcuthinPath.ClearValue(TextBox.BorderBrushProperty);
-            else
+        private void CheckAcuthinPath()
+        {
+            Regex rx = new Regex(@"^(?:[A-Za-z]\:\\|\\\\[\w.]+\\)(?:[\w .]*\\)*acuthin\.exe$");
+
+            if (!rx.IsMatch(txtAcuthinPath.Text) && txtAcuthinPath.Text != "")
                 txtAcuthinPath.BorderBrush = Brushes.Red;
+            else
+                txtAcuthinPath.ClearValue(TextBox.BorderBrushProperty);
+
         }
         #endregion
 
@@ -298,7 +304,6 @@ namespace ZDAT
             }
         }
         #endregion
-
 
         private void btnMapScreen_Click(object sender, RoutedEventArgs e)
         {
