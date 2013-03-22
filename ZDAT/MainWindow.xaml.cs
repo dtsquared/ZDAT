@@ -90,16 +90,13 @@ namespace ZDAT
             bgWorkerEDI.WorkerReportsProgress = true;
             bgWorkerEDI.WorkerSupportsCancellation = true;
             #endregion
-
         }
 
         private void MainWindow1_Closing(object sender, CancelEventArgs e)
         {
-            if (txtBranch.Text != "")
-            {
-                ZDAT.Properties.Settings.Default.Branch = txtBranch.Text;
-                ZDAT.Properties.Settings.Default.Save();
-            }
+            ZDAT.Properties.Settings.Default.Branch = txtBranch.Text;
+            ZDAT.Properties.Settings.Default.Acuthin = txtAcuthinPath.Text;
+            ZDAT.Properties.Settings.Default.Save();
         }
         #endregion
 
@@ -203,6 +200,12 @@ namespace ZDAT
         #endregion
 
         #region tabOptions
+        private void tabOptions_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtAcuthinPath.Text = ZDAT.Properties.Settings.Default.Acuthin;
+            CheckAcuthinPath();
+        }
+
         private void tabOptions_GotFocus(object sender, RoutedEventArgs e)
         {
             MainWindow1.Width = 515;
@@ -242,9 +245,9 @@ namespace ZDAT
             else
             {
                 txtAcuthinPath.ClearValue(TextBox.BorderBrushProperty);
-                ZDAT.Properties.Settings.Default.Acuthin = txtAcuthinPath.Text;
                 if (pathTxt != "" && !File.Exists(pathTxt))
                     txtAcuthinPath.BorderBrush = Brushes.Red;
+
             }
         }
         #endregion

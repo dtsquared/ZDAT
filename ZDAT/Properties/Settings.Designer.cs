@@ -37,7 +37,7 @@ namespace ZDAT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Acucorp\\Acucbl62\\AcuGT\\bin\\acuthin.exe")]
         public string Acuthin {
             get {
                 return ((string)(this["Acuthin"]));

@@ -48,7 +48,7 @@
                     <Label x:Name="lblWindowName" Content="Window Name" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabOptions" Header="Options" GotFocus="tabOptions_GotFocus">
+            <TabItem x:Name="tabOptions" Header="Options" GotFocus="tabOptions_GotFocus" Loaded="tabOptions_Loaded">
                 <Grid Background="#FFE5E5E5">
                     <TextBox x:Name="txtAcuthinPath" Height="23" Margin="98,82,119,0" VerticalAlignment="Top" LostKeyboardFocus="txtAcuthinPath_LostKeyboardFocus"/>
                     <Button x:Name="btnBrowse" Content="Browse" Margin="0,82,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="104" Click="btnBrowse_Click" TabIndex="1"/>
