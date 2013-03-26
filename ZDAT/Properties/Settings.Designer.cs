@@ -70,5 +70,29 @@ namespace ZDAT.Properties {
                 this["Pass"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SaveUser {
+            get {
+                return ((bool)(this["SaveUser"]));
+            }
+            set {
+                this["SaveUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SavePass {
+            get {
+                return ((bool)(this["SavePass"]));
+            }
+            set {
+                this["SavePass"] = value;
+            }
+        }
     }
 }
