@@ -93,8 +93,29 @@ namespace ZDAT
 
         private void MainWindow1_Closing(object sender, CancelEventArgs e)
         {
+            bool SaveUser = false;
+            bool SavePass = false;
+
+            if (chkSaveUser.IsChecked == true && txtUser.Text != "")
+            {
+                SaveUser = true;
+                ZDAT.Properties.Settings.Default.User = txtUser.Text;
+            }
+            else
+                ZDAT.Properties.Settings.Default.User = "";
+
+            if (chkSavePass.IsChecked == true && psbPassword.Password != "")
+            {
+                SavePass = true;
+                ZDAT.Properties.Settings.Default.Password = psbPassword.Password;
+            }
+            else
+                ZDAT.Properties.Settings.Default.Password = "";
+
             ZDAT.Properties.Settings.Default.Branch = txtBranch.Text;
             ZDAT.Properties.Settings.Default.Acuthin = txtAcuthinPath.Text;
+            ZDAT.Properties.Settings.Default.SaveUser = SaveUser;
+            ZDAT.Properties.Settings.Default.SavePass = SavePass;
             ZDAT.Properties.Settings.Default.Save();
         }
         #endregion
@@ -201,6 +222,21 @@ namespace ZDAT
         #region tabOptions
         private void tabOptions_Loaded(object sender, RoutedEventArgs e)
         {
+            bool SaveUser = ZDAT.Properties.Settings.Default.SaveUser;
+            bool SavePass = ZDAT.Properties.Settings.Default.SavePass;
+
+            if (SaveUser == true)
+            {
+                chkSaveUser.IsChecked = true;
+                txtUser.Text = ZDAT.Properties.Settings.Default.User;
+            }
+
+            if (SavePass == true)
+            {
+                chkSavePass.IsChecked = true;
+                psbPassword.Password = ZDAT.Properties.Settings.Default.Password;
+            }
+
             txtAcuthinPath.Text = ZDAT.Properties.Settings.Default.Acuthin;
             CheckAcuthinPath();
         }

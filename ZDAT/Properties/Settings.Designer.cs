@@ -62,12 +62,12 @@ namespace ZDAT.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Pass {
+        public string Password {
             get {
-                return ((string)(this["Pass"]));
+                return ((string)(this["Password"]));
             }
             set {
-                this["Pass"] = value;
+                this["Password"] = value;
             }
         }
         
