@@ -9,11 +9,28 @@ using System.Windows.Forms;
 using PInvoke;
 using System.ComponentModel;
 using System.Windows.Threading;
+using System.Diagnostics;
+
 
 namespace ZDAT
 {
     public class Automation
     {
+        public Process StartZD(string BranchNumber, string ZDPath, string UserName)
+        {
+            Process ZD = new Process();
+            ZD.StartInfo.FileName = ZDPath;
+            ZD.StartInfo.Arguments = "B" + BranchNumber + ":5632 WESNETZD";
+            ZD.Start();
+
+            return ZD;
+        }
+
+        public void NewOrderEntry(Process ZD)
+        {
+
+        }
+
         public bool EnterOrders(IEnumerable<OpenXMLReader.Order> Orders, int TotalLines, bool EDIEnabled, string Branch, BackgroundWorker worker, DoWorkEventArgs e)
         {
             #region Declarations

@@ -372,5 +372,11 @@ namespace ZDAT
             for (int i = 0; i < childhWnd.Count; i++)
                 PInvoke.MH.sendString(childhWnd[i], i.ToString());
         }
+
+        private void btnStartZD_Click(object sender, RoutedEventArgs e)
+        {
+            Automation at = new Automation();
+            at.StartZD(txtBranch.Text, txtAcuthinPath.Text, txtUser.Text);
+        }
     }
 }
