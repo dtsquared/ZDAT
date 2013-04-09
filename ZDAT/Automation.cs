@@ -660,13 +660,20 @@ namespace ZDAT
                         #endregion
 
                         #region Print_Order
+                        iCounter = 1;
                         Console.Write("Printing ticket");
                         do
                         {
                             Phandle = Win.GetHandle(Branch + " - Printer Selection");
                             Thread.Sleep(250);
+                            if (iCounter % 10 == 0)
+                            {
+                                break;
+                            }
+                            iCounter++;
                         } while (Phandle == IntPtr.Zero);
 
+                        iCounter = 1;
                         PchildhWnd = Win.GetChildWindows(Phandle);
                         for (int i = 0; i < PchildhWnd.Count; i++)
                         {
@@ -686,15 +693,22 @@ namespace ZDAT
                         }
                         Console.WriteLine();
                         Phandle = IntPtr.Zero;
-                        iCounter = 1;
 
+                        iCounter = 1;
                         Console.Write("Confirming ticket printed");
                         do
                         {
                             Phandle = Win.GetHandle("O111C");
                             Thread.Sleep(250);
+
+                            if (iCounter % 25 == 0)
+                            {
+                                break;
+                            }
+                            iCounter++;
                         } while (Phandle == IntPtr.Zero);
 
+                        iCounter = 1;
                         PchildhWnd = Win.GetChildWindows(Phandle);
                         for (int i = 0; i < PchildhWnd.Count; i++)
                         {
