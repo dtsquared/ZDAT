@@ -26,6 +26,16 @@ namespace ZDAT
             return ZD;
         }
 
+
+        public void HideZDWindow()
+        {
+            IntPtr MainhWnd = Win.GetHandle("3615 - WESNET ZD");
+            List<IntPtr> childhWnd = Win.GetChildWindows(MainhWnd);
+
+            Win.HideWindow(childhWnd[8]);
+            Win.HideWindow(childhWnd[4]);
+        }
+
         public void NewOrderEntry(Process ZD)
         {
 

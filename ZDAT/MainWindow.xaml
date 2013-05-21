@@ -46,6 +46,7 @@
                     <Button x:Name="btnRevertMap" Content="Revert" HorizontalAlignment="Left" Margin="355,44,0,0" VerticalAlignment="Top" Width="75"/>
                     <TextBox x:Name="txtWindowName" HorizontalAlignment="Left" Height="23" Margin="104,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246" Text="3615 - Sales Order Management - New"/>
                     <Label x:Name="lblWindowName" Content="Window Name" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Test" HorizontalAlignment="Left" Height="54" Margin="113,60,0,0" VerticalAlignment="Top" Width="93" Click="Button_Click_1"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabOptions" Header="Options" GotFocus="tabOptions_GotFocus" Loaded="tabOptions_Loaded" IsEnabled="False">

@@ -69,7 +69,7 @@ namespace ZDAT
         }
 
         #region Main_Window
-        //Main Window initialization
+
         public MainWindow()
         {
             InitializeComponent();
@@ -282,7 +282,6 @@ namespace ZDAT
                 txtAcuthinPath.ClearValue(TextBox.BorderBrushProperty);
                 if (pathTxt != "" && !File.Exists(pathTxt))
                     txtAcuthinPath.BorderBrush = Brushes.Red;
-
             }
         }
         #endregion
@@ -315,9 +314,7 @@ namespace ZDAT
             custRange.CustTo = txtCustTo.Text;
 
             if (bgWorkerEDI.IsBusy != true)
-            {
                 bgWorkerEDI.RunWorkerAsync(custRange);
-            }
         }
         #endregion
 
@@ -377,6 +374,12 @@ namespace ZDAT
         {
             Automation at = new Automation();
             at.StartZD(txtBranch.Text, txtAcuthinPath.Text, txtUser.Text);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Automation at = new Automation();
+            at.HideZDWindow();
         }
     }
 }
