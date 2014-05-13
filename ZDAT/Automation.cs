@@ -183,6 +183,7 @@ namespace ZDAT
                             {
                                 if (MH.GetWindowTextRaw(PchildhWnd[i]) == "Se&lect")
                                 {
+                                    Thread.Sleep(500);
                                     Mouse.LeftClick(PchildhWnd[i]);
                                     do
                                     {
@@ -197,7 +198,7 @@ namespace ZDAT
                             }
                             Console.WriteLine();
                             Phandle = IntPtr.Zero;
-                            iCounter = 1;
+                            iCounter = 0;
 
                             Console.Write("Confirming ticket printed");
                             do
