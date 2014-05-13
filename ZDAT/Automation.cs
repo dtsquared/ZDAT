@@ -203,16 +203,14 @@ namespace ZDAT
                                 iCounter = 0;
 
                                 Console.Write("Confirming ticket printed");
-                                do
+                                for (int i = 0; i <= 25; i++)
                                 {
-                                    if (iCounter % 25 == 0)
-                                    {
-                                        break;
-                                    }
                                     Phandle = Win.GetHandle("O111C");
                                     Thread.Sleep(250);
-                                    iCounter += 1;
-                                } while (Phandle == IntPtr.Zero);
+
+                                    if (Phandle == IntPtr.Zero)
+                                        break;
+                                }
 
                                 if (iCounter % 25 != 0)
                                 {
