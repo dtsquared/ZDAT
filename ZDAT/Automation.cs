@@ -172,7 +172,10 @@ namespace ZDAT
                                 Phandle = Win.GetHandle(Branch + " - Printer Selection");
                                 Thread.Sleep(250);
                                 if (Phandle != IntPtr.Zero)
+                                {
+                                    Console.Write("Ticket failed to print");
                                     break;
+                                }
                             }
 
                             PchildhWnd = Win.GetChildWindows(Phandle);
