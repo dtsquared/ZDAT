@@ -208,30 +208,29 @@ namespace ZDAT
                                     Phandle = Win.GetHandle("O111C");
                                     Thread.Sleep(250);
 
-                                    if (Phandle == IntPtr.Zero)
+                                    if (Phandle != IntPtr.Zero)
                                         break;
                                 }
 
-                                if (iCounter % 25 != 0)
+                                if (Phandle != IntPtr.Zero)
                                 {
+                                    MH.setFocus(Phandle);
                                     PchildhWnd = Win.GetChildWindows(Phandle);
                                     for (int i = 0; i < PchildhWnd.Count; i++)
                                     {
                                         if (MH.GetWindowTextRaw(PchildhWnd[i]) == "OK")
-                                        {
+                                        {  
                                             Mouse.LeftClick(PchildhWnd[i]);
-                                            do
+                                            for (int j = 0; j <= 25; j++)
                                             {
-                                                if (iCounter % 25 == 0)
-                                                {
-                                                    Mouse.LeftClick(PchildhWnd[i]);
-                                                }
                                                 Thread.Sleep(250);
-                                                iCounter += 1;
-                                            } while (Win.GetHandle("O111C") != IntPtr.Zero);
+                                                if (Win.GetHandle("O111C") != IntPtr.Zero)
+                                                    break;
+                                            }
                                         }
                                     }
                                 }
+
                                 Console.WriteLine();
                                 Phandle = IntPtr.Zero;
                                 iCounter = 1;
