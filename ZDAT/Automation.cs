@@ -178,47 +178,14 @@ namespace ZDAT
                                 }
                             }
 
-                            PchildhWnd = Win.GetChildWindows(Phandle);
-                            for (int i = 0; i < PchildhWnd.Count; i++)
-                            {
-                                if (MH.GetWindowTextRaw(PchildhWnd[i]) == "Se&lect")
-                                {
-                                    Thread.Sleep(500);
-                                    Mouse.LeftClick(PchildhWnd[i]);
-                                    do
-                                    {
-                                        if (iCounter % 25 == 0)
-                                        {
-                                            Mouse.LeftClick(PchildhWnd[i]);
-                                        }
-                                        Thread.Sleep(250);
-                                        iCounter += 1;
-                                    } while (Win.GetHandle(Branch + " - Printer Selection") != IntPtr.Zero);
-                                }
-                            }
-                            Console.WriteLine();
-                            Phandle = IntPtr.Zero;
-                            iCounter = 0;
-
-                            Console.Write("Confirming ticket printed");
-                            do
-                            {
-                                if (iCounter % 25 == 0)
-                                {
-                                    break;
-                                }
-                                Phandle = Win.GetHandle("O111C");
-                                Thread.Sleep(250);
-                                iCounter += 1;
-                            } while (Phandle == IntPtr.Zero);
-
-                            if (iCounter % 25 != 0)
+                            if (Phandle != IntPtr.Zero)
                             {
                                 PchildhWnd = Win.GetChildWindows(Phandle);
                                 for (int i = 0; i < PchildhWnd.Count; i++)
                                 {
-                                    if (MH.GetWindowTextRaw(PchildhWnd[i]) == "OK")
+                                    if (MH.GetWindowTextRaw(PchildhWnd[i]) == "Se&lect")
                                     {
+                                        Thread.Sleep(500);
                                         Mouse.LeftClick(PchildhWnd[i]);
                                         do
                                         {
@@ -228,13 +195,49 @@ namespace ZDAT
                                             }
                                             Thread.Sleep(250);
                                             iCounter += 1;
-                                        } while (Win.GetHandle("O111C") != IntPtr.Zero);
+                                        } while (Win.GetHandle(Branch + " - Printer Selection") != IntPtr.Zero);
                                     }
                                 }
+                                Console.WriteLine();
+                                Phandle = IntPtr.Zero;
+                                iCounter = 0;
+
+                                Console.Write("Confirming ticket printed");
+                                do
+                                {
+                                    if (iCounter % 25 == 0)
+                                    {
+                                        break;
+                                    }
+                                    Phandle = Win.GetHandle("O111C");
+                                    Thread.Sleep(250);
+                                    iCounter += 1;
+                                } while (Phandle == IntPtr.Zero);
+
+                                if (iCounter % 25 != 0)
+                                {
+                                    PchildhWnd = Win.GetChildWindows(Phandle);
+                                    for (int i = 0; i < PchildhWnd.Count; i++)
+                                    {
+                                        if (MH.GetWindowTextRaw(PchildhWnd[i]) == "OK")
+                                        {
+                                            Mouse.LeftClick(PchildhWnd[i]);
+                                            do
+                                            {
+                                                if (iCounter % 25 == 0)
+                                                {
+                                                    Mouse.LeftClick(PchildhWnd[i]);
+                                                }
+                                                Thread.Sleep(250);
+                                                iCounter += 1;
+                                            } while (Win.GetHandle("O111C") != IntPtr.Zero);
+                                        }
+                                    }
+                                }
+                                Console.WriteLine();
+                                Phandle = IntPtr.Zero;
+                                iCounter = 1;
                             }
-                            Console.WriteLine();
-                            Phandle = IntPtr.Zero;
-                            iCounter = 1;
                             #endregion
                             #endregion
 
