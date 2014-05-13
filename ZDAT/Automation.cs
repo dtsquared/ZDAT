@@ -172,10 +172,7 @@ namespace ZDAT
                                 Phandle = Win.GetHandle(Branch + " - Printer Selection");
                                 Thread.Sleep(250);
                                 if (Phandle != IntPtr.Zero)
-                                {
-                                    Console.Write("Ticket failed to print");
                                     break;
-                                }
                             }
 
                             if (Phandle != IntPtr.Zero)
@@ -225,6 +222,7 @@ namespace ZDAT
                                             for (int j = 0; j <= 25; j++)
                                             {
                                                 Thread.Sleep(250);
+                                                Console.Write(j);
                                                 if (Win.GetHandle("O111C") != IntPtr.Zero)
                                                     break;
                                             }
