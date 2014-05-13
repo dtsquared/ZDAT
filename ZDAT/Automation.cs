@@ -238,43 +238,6 @@ namespace ZDAT
                             #endregion
                             #endregion
 
-                            #region Clear_Order
-                            ////Console.Write("\r\nClearing order");
-                            //Mouse.LeftClick(OHchildhWnd[(int)OH.Clear]);
-                            //do
-                            //{
-                            //    //Console.Write(".");
-                            //    if (iCounter % 25 == 0)
-                            //    {
-                            //        Mouse.LeftClick(OHchildhWnd[(int)OH.Clear]);
-                            //    }
-                            //    Phandle = Window.GetHandle("OEPAD");
-                            //    Thread.Sleep(250);
-                            //    iCounter += 1;
-                            //} while (Phandle == IntPtr.Zero);
-                            //iCounter = 1;
-                            //PchildhWnd = Window.GetChildWindows(Phandle);
-                            //for (int i = 0; i < PchildhWnd.Count; i++)
-                            //{
-                            //    if (MH.GetWindowTextRaw(PchildhWnd[i]) == "&Yes")
-                            //    {
-                            //        Mouse.LeftClick(PchildhWnd[i]);
-                            //        do
-                            //        {
-                            //            if (iCounter % 25 == 0)
-                            //            {
-                            //                Mouse.LeftClick(PchildhWnd[i]);
-                            //            }
-                            //            Thread.Sleep(250);
-                            //            iCounter += 1;
-                            //        } while (Window.GetHandle("OEPAD") != IntPtr.Zero);
-                            //    }
-                            //}
-                            //iCounter = 1;
-                            //Phandle = IntPtr.Zero;
-                            ////Console.WriteLine();
-                            #endregion
-
                             #region Lost_Sale
                             ////Console.WriteLine("Entering reason for lost sale.");
 
