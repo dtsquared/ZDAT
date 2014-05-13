@@ -196,6 +196,7 @@ namespace ZDAT
                                             Thread.Sleep(250);
                                             iCounter += 1;
                                         } while (Win.GetHandle(Branch + " - Printer Selection") != IntPtr.Zero);
+                                        break;
                                     }
                                 }
                                 Console.WriteLine();
@@ -227,6 +228,7 @@ namespace ZDAT
                                                 if (Win.GetHandle("O111C") != IntPtr.Zero)
                                                     break;
                                             }
+                                            break;
                                         }
                                     }
                                 }
@@ -237,40 +239,6 @@ namespace ZDAT
                             }
                             #endregion
                             #endregion
-
-                            #region Lost_Sale
-                            ////Console.WriteLine("Entering reason for lost sale.");
-
-                            //do
-                            //{
-                            //    Phandle = Window.GetHandle(Branch + " - Lost Sale");
-                            //    Thread.Sleep(250);
-                            //    iCounter += 1;
-                            //} while (Phandle == IntPtr.Zero);
-
-                            //PchildhWnd = Window.GetChildWindows(Phandle);
-
-                            //for (int i = 0; i < PchildhWnd.Count; i++)
-                            //{
-                            //    if (MH.GetWindowTextRaw(PchildhWnd[i]) == "")
-                            //    {
-                            //        MH.setFocus(PchildhWnd[i]);
-                            //        MH.sendString(PchildhWnd[i], "K");
-                            //        do
-                            //        {
-                            //            if (iCounter % 25 == 0)
-                            //            {
-                            //                MH.sendString(PchildhWnd[i], "K");
-                            //            }
-                            //            Thread.Sleep(250);
-                            //            iCounter += 1;
-                            //        } while (Window.GetHandle("OEPAD") != IntPtr.Zero);
-                            //    }
-                            //}
-                            //iCounter = 1;
-                            //Phandle = IntPtr.Zero;
-                            #endregion
-
 
                             Mouse.LeftClick(OHchildhWnd[(int)OH.OrderPad]);
                             do
