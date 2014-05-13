@@ -219,18 +219,20 @@ namespace ZDAT
                                         if (MH.GetWindowTextRaw(PchildhWnd[i]) == "OK")
                                         {  
                                             Mouse.LeftClick(PchildhWnd[i]);
-                                            for (int j = 0; j <= 25; j++)
-                                            {
-                                                Thread.Sleep(250);
-                                                Console.Write(j);
-                                                if (Win.GetHandle("O111C") != IntPtr.Zero)
-                                                    break;
-                                            }
+                                            Thread.Sleep(500);
                                             break;
                                         }
                                     }
                                 }
 
+                                for (int i = 0; i <= 25; i++)
+                                {
+                                    Thread.Sleep(250);
+                                    if (MH.GetWindowTextRaw(OHchildhWnd[(int)OH.CustomerPO]) == "")
+                                        break;
+                                    Console.Write(i + ", ");
+                                }
+                                
                                 Console.WriteLine();
                                 Phandle = IntPtr.Zero;
                                 iCounter = 1;
