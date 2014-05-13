@@ -19,7 +19,7 @@ namespace ZDAT
         NewItem = 158,
         Order = 154,
         OrderHeader = 122,
-        ShipToNum = 10,
+        ShipToNum = 100,
         ShipToDesc = 98,
         ShipToOvr = 97,
         LineIncr = 18
