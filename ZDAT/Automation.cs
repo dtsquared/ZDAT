@@ -167,19 +167,13 @@ namespace ZDAT
 
                             #region Print_Order
                             Console.Write("Printing ticket");
-                            do
+                            for (int i = 0; i <= 20; i++)
                             {
-                                iCounter += 1;
                                 Phandle = Win.GetHandle(Branch + " - Printer Selection");
                                 Thread.Sleep(250);
-
-                                if (iCounter % 20 == 0)
-                                {
+                                if (Phandle != IntPtr.Zero)
                                     break;
-                                }
-
-                            } while (Phandle == IntPtr.Zero);
-                            iCounter = 0;
+                            }
 
                             PchildhWnd = Win.GetChildWindows(Phandle);
                             for (int i = 0; i < PchildhWnd.Count; i++)
@@ -376,6 +370,7 @@ namespace ZDAT
                             #region Ship_To
                             if (o.Area.ToString() != MH.GetWindowTextRaw(OPchildhWnd[(int)OP.ShipToNum]).ToString())
                             {
+                                MH.setFocus(OPchildhWnd[(int)OP.ShipToNum]); 
                                 MH.sendString(OPchildhWnd[(int)OP.ShipToNum], o.Area);
                                 MH.setFocus(OPchildhWnd[(int)OP.ShipToNum]);
                                 MH.sendKey(OPchildhWnd[(int)OP.ShipToNum], Keys.Enter, true);
