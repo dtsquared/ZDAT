@@ -217,7 +217,7 @@ namespace ZDAT
                                     for (int i = 0; i < PchildhWnd.Count; i++)
                                     {
                                         if (MH.GetWindowTextRaw(PchildhWnd[i]) == "OK")
-                                        {  
+                                        {
                                             Mouse.LeftClick(PchildhWnd[i]);
                                             Thread.Sleep(500);
                                             break;
@@ -232,7 +232,7 @@ namespace ZDAT
                                         break;
                                     Console.Write(i + ", ");
                                 }
-                                
+
                                 Console.WriteLine();
                                 Phandle = IntPtr.Zero;
                                 iCounter = 1;
@@ -305,7 +305,7 @@ namespace ZDAT
                             #region Ship_To
                             if (o.Area.ToString() != MH.GetWindowTextRaw(OPchildhWnd[(int)OP.ShipToNum]).ToString())
                             {
-                                MH.setFocus(OPchildhWnd[(int)OP.ShipToNum]); 
+                                MH.setFocus(OPchildhWnd[(int)OP.ShipToNum]);
                                 MH.sendString(OPchildhWnd[(int)OP.ShipToNum], o.Area);
                                 MH.setFocus(OPchildhWnd[(int)OP.ShipToNum]);
                                 MH.sendKey(OPchildhWnd[(int)OP.ShipToNum], Keys.Enter, true);
@@ -358,8 +358,6 @@ namespace ZDAT
                             else
                             {
                                 #region Product
-
-
                                 Console.WriteLine("Entering part number " + o.Part);
                                 Win.BringToTop(OPhandle);
 
@@ -460,6 +458,47 @@ namespace ZDAT
                                 //MH.sendKey(childhWnd[(int)OP.Price], Keys.Enter, true);
                                 //Thread.Sleep(500);
                                 #endregion
+
+                                // Give some time for loading
+                                Thread.Sleep(500);
+
+                                // Add Date
+                                Console.WriteLine("Setting Customer Delivery Date");
+                                IntPtr CustDelDtHandle = OPchildhWnd[(int)OP.CustDelDt];
+                                bool dateError = true;
+
+                                for (int i = 1; i <= 30; i++)
+                                {
+                                    if (dateError)
+                                    {
+                                        MH.setFocus(CustDelDtHandle);
+                                        Thread.Sleep(250);
+                                        MH.sendString(CustDelDtHandle, string.Format("{0:MM/dd/yy}", DateTime.Today.AddDays(i)));
+                                        MH.sendKey(CustDelDtHandle, Keys.Tab, false);
+                                    }
+                                    else
+                                        break;
+
+                                    // Wait just in case the warning takes a while to load
+                                    Thread.Sleep(500);
+
+                                    Phandle = Win.GetHandle("CTLSHPVIAMT Warning");
+                                    if (Phandle != IntPtr.Zero)
+                                    {
+                                        PchildhWnd = Win.GetChildWindows(Phandle);
+                                        for (int j = 0; j < PchildhWnd.Count; j++)
+                                        {
+                                            if (MH.GetWindowTextRaw(PchildhWnd[j]) == "OK")
+                                            {
+                                                MH.setFocus(Phandle);
+                                                Mouse.LeftClick(PchildhWnd[j]);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                        dateError = false;
+                                }
 
                                 #region Add
                                 Console.WriteLine("Adding to order.");

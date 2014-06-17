@@ -22,32 +22,33 @@ namespace ZDAT
         ShipToNum = 100,
         ShipToDesc = 98,
         ShipToOvr = 97,
-        LineIncr = 18
+        LineIncr = 18,
+        CustDelDt = 73
     }
 
     public enum OH
     {
-        Customer = 107,
-        OrderNum = 109,
-        SoldTo = 126,
-        ShipToDesc = 128,
-        ShipToNum = 13,
-        OrderPad = 122,
-        CustomerPO = 39,
-        JobNumber = 40,
-        EdiPO = 49,
+        Customer = 111,
+        OrderNum = 113,
+        SoldTo = 130,
+        ShipToDesc = 132,
+        ShipToNum = 135,
+        OrderPad = 126,
+        CustomerPO = 41,
+        JobNumber = 42,
+        EdiPO = 51,
         ShipTerms = 77,
         ShipTermsDesc = 80,
         ShipVia = 78,
         ShipViaDesc = 81,
         ShipAcctNum = 90,
         ShipInstruc = 79,
-        Memo = 146,
-        Inquiry = 147,
-        Order = 148,
-        Save = 117,
-        Clear = 118,
-        Close = 125
+        Memo = 150,
+        Inquiry = 151,
+        Order = 152,
+        Save = 121,
+        Clear = 122,
+        Close = 129
     }
 
     public enum OS
