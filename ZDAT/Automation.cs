@@ -122,14 +122,16 @@ namespace ZDAT
                                 Thread.Sleep(300);
                             }
 
-                            Mouse.LeftClick(OHchildhWnd[(int)OH.Order]);
+                            Mouse.LeftClick(OHchildhWnd[(int)OH.Inquiry]);
                             Thread.Sleep(300);
-                            Mouse.LeftClick(OHchildhWnd[(int)OH.Order]);
+                            Mouse.LeftClick(OHchildhWnd[(int)OH.Inquiry]);
                         #endregion Fill_Order_Header
 
                             #region Save_Order
                             Console.Write("Saving Order");
+                            /*
                             Phandle = IntPtr.Zero;
+                            
                             Mouse.LeftClick(OHchildhWnd[(int)OH.Save]);
                             do
                             {
@@ -142,7 +144,7 @@ namespace ZDAT
                                 iCounter += 1;
                             } while (Phandle == IntPtr.Zero);
                             iCounter = 1;
-
+                            
                             PchildhWnd = Win.GetChildWindows(Phandle);
                             for (int i = 0; i < PchildhWnd.Count; i++)
                             {
@@ -164,8 +166,9 @@ namespace ZDAT
                             Console.WriteLine();
                             Phandle = IntPtr.Zero;
                             iCounter = 1;
-
+                            */
                             #region Print_Order
+                            /*
                             Console.Write("Printing ticket");
                             for (int i = 0; i <= 20; i++)
                             {
@@ -237,6 +240,7 @@ namespace ZDAT
                                 Phandle = IntPtr.Zero;
                                 iCounter = 1;
                             }
+                             */
                             #endregion
                             #endregion
 
@@ -361,7 +365,7 @@ namespace ZDAT
                                 Console.WriteLine("Entering part number " + o.Part);
                                 Win.BringToTop(OPhandle);
 
-                                Thread.Sleep(250);
+                                Thread.Sleep(300);
                                 if (newOrder == true)
                                 {
                                     MH.setFocus(OPchildhWnd[(int)OP.Product]);
@@ -373,11 +377,22 @@ namespace ZDAT
                                 }
                                 else
                                 {
-                                    if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.ProdCode]) == "")
+                                    if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Product]) == "")
                                     {
+                                        MH.setFocus(OPchildhWnd[(int)OP.Product]);
+                                        Thread.Sleep(300);
                                         MH.sendString(OPchildhWnd[(int)OP.Product], o.Part);
+                                        Thread.Sleep(250);
                                     }
-                                    MH.sendString(OPchildhWnd[(int)OP.Product], o.Part);
+
+                                    if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Product]) != o.Part)
+                                    {
+                                        MH.setFocus(OPchildhWnd[(int)OP.Product]);
+                                        Thread.Sleep(300);
+                                        MH.sendString(OPchildhWnd[(int)OP.Product], o.Part);
+                                        Thread.Sleep(300);
+                                    }
+                                    Thread.Sleep(250);
                                     MH.sendKey(OPchildhWnd[(int)OP.Product], Keys.Tab, true);
                                 }
                                 Console.Write("Waiting for product to load");
@@ -392,7 +407,7 @@ namespace ZDAT
                                     {
                                         MH.setFocus(OPchildhWnd[(int)OP.Product]);
                                         Thread.Sleep(300);
-                                        if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.ProdCode]) == "")
+                                        if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Product]) == "")
                                         {
                                             MH.sendString(OPchildhWnd[(int)OP.Product], o.Part);
                                         }
@@ -417,6 +432,113 @@ namespace ZDAT
                                             }
                                         }
                                     }
+                                    Console.WriteLine();
+
+                                    #region Price Basis
+                                    // Set Price Basis
+                                    Phandle = Win.GetHandle("Price Basis");
+                                    if (Phandle != IntPtr.Zero)
+                                    {
+                                        Console.WriteLine("Setting Price Basis");
+                                        PchildhWnd = Win.GetChildWindows(Phandle);
+
+                                        for (int i = 0; i < PchildhWnd.Count; i++)
+                                        {
+                                            // Set Amount
+                                            if (MH.GetWindowTextRaw(PchildhWnd[i]) == ".000")
+                                            {
+                                                Thread.Sleep(500);
+                                                Mouse.LeftClick(PchildhWnd[i]);
+                                                Thread.Sleep(300);
+                                                MH.sendString(PchildhWnd[i], o.Price.ToString());
+                                                Thread.Sleep(250);
+
+                                                for (int j = 0; j < 20; j++)
+                                                {
+                                                    if (MH.GetWindowTextRaw(PchildhWnd[i]) != o.Price.ToString())
+                                                    {
+                                                        Mouse.LeftClick(PchildhWnd[i]);
+                                                        Thread.Sleep(250);
+                                                        MH.sendString(PchildhWnd[i], o.Price.ToString());
+                                                        Thread.Sleep(250);
+                                                    }
+                                                    else
+                                                        break;
+                                                }
+
+                                                MH.sendKey(PchildhWnd[i], Keys.Enter, true);
+                                                Thread.Sleep(700);
+                                            }
+                                        }
+
+                                        for (int i = 0; i < PchildhWnd.Count; i++)
+                                        {
+                                            // Click close button
+                                            if (MH.GetWindowTextRaw(PchildhWnd[i]) == "&Select")
+                                            {
+                                                Console.WriteLine("Closing Price Basis");
+                                                Thread.Sleep(500);
+                                                MH.setFocus(PchildhWnd[i]);
+                                                Mouse.LeftClick(PchildhWnd[i]);
+                                                Thread.Sleep(500);
+                                            }
+                                        }
+                                    }
+                                    #endregion
+
+                                    Thread.Sleep(600);
+
+                                    #region Market Price
+                                    // Set Price Basis
+                                    Phandle = Win.GetHandle("Price Basis");
+                                    if (Phandle != IntPtr.Zero)
+                                    {
+                                        Console.WriteLine("Setting Price Basis");
+                                        PchildhWnd = Win.GetChildWindows(Phandle);
+
+                                        for (int i = 0; i < PchildhWnd.Count; i++)
+                                        {
+                                            // Set Amount
+                                            if (MH.GetWindowTextRaw(PchildhWnd[i]) == ".000")
+                                            {
+                                                Thread.Sleep(500);
+                                                Mouse.LeftClick(PchildhWnd[i]);
+                                                Thread.Sleep(300);
+                                                MH.sendString(PchildhWnd[i], o.Price.ToString());
+                                                Thread.Sleep(250);
+
+                                                for (int j = 0; j < 20; j++)
+                                                {
+                                                    if (MH.GetWindowTextRaw(PchildhWnd[i]) != o.Price.ToString())
+                                                    {
+                                                        Mouse.LeftClick(PchildhWnd[i]);
+                                                        Thread.Sleep(250);
+                                                        MH.sendString(PchildhWnd[i], o.Price.ToString());
+                                                        Thread.Sleep(250);
+                                                    }
+                                                    else
+                                                        break;
+                                                }
+
+                                                MH.sendKey(PchildhWnd[i], Keys.Enter, true);
+                                                Thread.Sleep(700);
+                                            }
+                                        }
+
+                                        for (int i = 0; i < PchildhWnd.Count; i++)
+                                        {
+                                            // Click close button
+                                            if (MH.GetWindowTextRaw(PchildhWnd[i]) == "&Select")
+                                            {
+                                                Console.WriteLine("Closing Price Basis");
+                                                Thread.Sleep(500);
+                                                MH.setFocus(PchildhWnd[i]);
+                                                Mouse.LeftClick(PchildhWnd[i]);
+                                                Thread.Sleep(500);
+                                            }
+                                        }
+                                    }
+                                    #endregion
 
                                     Phandle = Win.GetHandle("OEPAD Error");
                                     if (Phandle != IntPtr.Zero)
@@ -437,67 +559,71 @@ namespace ZDAT
                                 #endregion
 
                                 #region Price
-                                //Mouse.LeftClick(childhWnd[(int)OP.Price]);
+                                double price = 0;
+                                Double.TryParse(MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Price]), out price);
 
-                                #region Price Overrides
-                                ////////////////////
-                                //                                                                          //
-                                // Used for price overrides - Tested ~140 line items with 100% success rate //
-                                //                                                                          //
-                                ////////////////////
+                                if (price != o.Price)
+                                {
+                                    Console.WriteLine("Setting price");
+                                    MH.setFocus(OPchildhWnd[(int)OP.Price]);
+                                    Thread.Sleep(300);
+                                    MH.sendString(OPchildhWnd[(int)OP.Price], o.Price.ToString());
+                                    Thread.Sleep(300);
+                                    MH.sendKey(OPchildhWnd[(int)OP.Price], Keys.Enter, true);
+                                    Thread.Sleep(500);
+                                    MH.sendString(OPchildhWnd[(int)OP.Reason], "1");
+                                    Thread.Sleep(300);
+                                    if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Reason]) != "1")
+                                    {
+                                        MH.sendString(OPchildhWnd[(int)OP.Reason], "1");
+                                    }
 
-                                //do
-                                //{
-                                //    //Console.WriteLine("Waiting for price to be set..");
-                                //    MH.sendWMString(childhWnd[(int)OP.Price], MH.WM_SETTEXT, "0.001");
-                                //    Double.TryParse(MH.GetWindowTextRaw(childhWnd[(int)OP.Price]), out Price);
-                                //    Thread.Sleep(250);
-                                //} while (Price <= 0.000);
+                                    Phandle = Win.GetHandle(Branch + " - Price Change Reason");
+                                    if (Phandle != IntPtr.Zero)
+                                    {
+                                        PchildhWnd = Win.GetChildWindows(Phandle);
+                                        for (int i = 0; i < PchildhWnd.Count; i++)
+                                        {
+                                            if (MH.GetWindowTextRaw(PchildhWnd[i]) == "&Select")
+                                            {
+                                                Console.WriteLine("Closing price change window");
+                                                MH.setFocus(PchildhWnd[i]);
+                                                Thread.Sleep(300);
+                                                Mouse.LeftClick(PchildhWnd[i]);
+                                                Thread.Sleep(500);
+                                            }
+                                        }
+                                    }
+                                }
                                 #endregion
 
-                                //MH.sendKey(childhWnd[(int)OP.Price], Keys.Enter, true);
-                                //Thread.Sleep(500);
-                                #endregion
-
-                                // Give some time for loading
-                                Thread.Sleep(500);
 
                                 // Add Date
                                 Console.WriteLine("Setting Customer Delivery Date");
                                 IntPtr CustDelDtHandle = OPchildhWnd[(int)OP.CustDelDt];
-                                bool dateError = true;
 
-                                for (int i = 1; i <= 30; i++)
+                                MH.setFocus(CustDelDtHandle);
+                                Thread.Sleep(250);
+                                MH.sendString(CustDelDtHandle, string.Format("{0:MM/dd/yy}", DateTime.Today));
+                                MH.sendKey(CustDelDtHandle, Keys.Tab, false);
+
+                                // Wait just in case the warning takes a while to load
+                                Thread.Sleep(500);
+
+                                Phandle = Win.GetHandle("CTLSHPVIAMT Warning");
+                                if (Phandle != IntPtr.Zero)
                                 {
-                                    if (dateError)
+                                    PchildhWnd = Win.GetChildWindows(Phandle);
+                                    for (int j = 0; j < PchildhWnd.Count; j++)
                                     {
-                                        MH.setFocus(CustDelDtHandle);
-                                        Thread.Sleep(250);
-                                        MH.sendString(CustDelDtHandle, string.Format("{0:MM/dd/yy}", DateTime.Today.AddDays(i)));
-                                        MH.sendKey(CustDelDtHandle, Keys.Tab, false);
-                                    }
-                                    else
-                                        break;
-
-                                    // Wait just in case the warning takes a while to load
-                                    Thread.Sleep(500);
-
-                                    Phandle = Win.GetHandle("CTLSHPVIAMT Warning");
-                                    if (Phandle != IntPtr.Zero)
-                                    {
-                                        PchildhWnd = Win.GetChildWindows(Phandle);
-                                        for (int j = 0; j < PchildhWnd.Count; j++)
+                                        if (MH.GetWindowTextRaw(PchildhWnd[j]) == "OK")
                                         {
-                                            if (MH.GetWindowTextRaw(PchildhWnd[j]) == "OK")
-                                            {
-                                                MH.setFocus(Phandle);
-                                                Mouse.LeftClick(PchildhWnd[j]);
-                                                break;
-                                            }
+                                            MH.setFocus(Phandle);
+                                            Mouse.LeftClick(PchildhWnd[j]);
+                                            Thread.Sleep(250);
+                                            break;
                                         }
                                     }
-                                    else
-                                        dateError = false;
                                 }
 
                                 #region Add
@@ -517,6 +643,44 @@ namespace ZDAT
                                     }
                                     if (iCounter % 25 == 0)
                                     {
+                                        #region price
+                                        price = 0;
+                                        Double.TryParse(MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Price]), out price);
+
+                                        if (price != o.Price)
+                                        {
+                                            Console.WriteLine("Setting price");
+                                            MH.setFocus(OPchildhWnd[(int)OP.Price]);
+                                            Thread.Sleep(300);
+                                            MH.sendString(OPchildhWnd[(int)OP.Price], o.Price.ToString());
+                                            Thread.Sleep(300);
+                                            MH.sendKey(OPchildhWnd[(int)OP.Price], Keys.Enter, true);
+                                            Thread.Sleep(500);
+                                            MH.sendString(OPchildhWnd[(int)OP.Reason], "1");
+                                            Thread.Sleep(300);
+                                            if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Reason]) != "1")
+                                            {
+                                                MH.sendString(OPchildhWnd[(int)OP.Reason], "1");
+                                            }
+
+                                            Phandle = Win.GetHandle(Branch + " - Price Change Reason");
+                                            if (Phandle != IntPtr.Zero)
+                                            {
+                                                PchildhWnd = Win.GetChildWindows(Phandle);
+                                                for (int i = 0; i < PchildhWnd.Count; i++)
+                                                {
+                                                    if (MH.GetWindowTextRaw(PchildhWnd[i]) == "&Select")
+                                                    {
+                                                        Console.WriteLine("Closing price change window");
+                                                        MH.setFocus(PchildhWnd[i]);
+                                                        Thread.Sleep(300);
+                                                        Mouse.LeftClick(PchildhWnd[i]);
+                                                        Thread.Sleep(500);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        #endregion
                                         Mouse.LeftClick(OPchildhWnd[(int)OP.Add]);
                                     }
                                     Phandle = Win.GetHandle("OEPAD Error");
@@ -592,7 +756,7 @@ namespace ZDAT
                         Thread.Sleep(300);
                     }
 
-                    Mouse.LeftClick(OHchildhWnd[(int)OH.Order]);
+                    Mouse.LeftClick(OHchildhWnd[(int)OH.Inquiry]);
 
                     if (worker.CancellationPending)
                     {
@@ -603,6 +767,7 @@ namespace ZDAT
                         #region Save_Order
                         Console.Write("Saving Order");
                         Phandle = IntPtr.Zero;
+                        /*
                         Mouse.LeftClick(OHchildhWnd[(int)OH.Save]);
                         do
                         {
@@ -636,9 +801,11 @@ namespace ZDAT
                         Console.WriteLine();
                         Phandle = IntPtr.Zero;
                         iCounter = 1;
+                        */
                         #endregion
 
                         #region Print_Order
+                        /*
                         iCounter = 1;
                         Console.Write("Printing ticket");
                         do
@@ -705,6 +872,7 @@ namespace ZDAT
                                 } while (Win.GetHandle("O111C") != IntPtr.Zero);
                             }
                         }
+                        */
                         Console.WriteLine();
                         Phandle = IntPtr.Zero;
                         iCounter = 1;

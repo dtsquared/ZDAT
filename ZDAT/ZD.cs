@@ -10,10 +10,12 @@ namespace ZDAT
     {
         Customer = 114,
         OrderNum = 117,
+        Reason = 30,
         Qty = 42,
         Product = 43,
         SO = 48,
         ProdCode = 54,
+        Price = 59,
         Desc = 128,
         Add = 160,
         NewItem = 158,

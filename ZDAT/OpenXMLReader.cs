@@ -76,6 +76,7 @@ namespace ZDAT
             public string Area { get; set; }
             public string Part { get; set; }
             public string Qty { get; set; }
+            public double Price { get; set; }
 
             /// <summary>
             /// Helper method for creating a list of orders 
@@ -121,6 +122,7 @@ namespace ZDAT
                         order.Area = textArray[2];
                         order.Qty = textArray[3];
                         order.Customer = textArray[4];
+                        order.Price = Math.Round(Convert.ToDouble(textArray[5]), 2);
 
                         result.Add(order);
                     }
