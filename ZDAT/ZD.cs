@@ -28,12 +28,12 @@ namespace ZDAT
 
     public enum OH
     {
-        Customer = 111,
-        OrderNum = 113,
-        SoldTo = 130,
-        ShipToDesc = 132,
-        ShipToNum = 135,
-        OrderPad = 126,
+        Customer = 116,
+        OrderNum = 118,
+        SoldTo = 135,
+        ShipToDesc = 137,
+        ShipToNum = 140,
+        OrderPad = 131,
         CustomerPO = 41,
         JobNumber = 42,
         EdiPO = 51,
@@ -43,12 +43,12 @@ namespace ZDAT
         ShipViaDesc = 81,
         ShipAcctNum = 90,
         ShipInstruc = 79,
-        Memo = 150,
-        Inquiry = 151,
-        Order = 152,
-        Save = 121,
-        Clear = 122,
-        Close = 129
+        Memo = 152,
+        Inquiry = 156,
+        Order = 157,
+        Save = 126,
+        Clear = 127,
+        Close = 134
     }
 
     public enum OS
