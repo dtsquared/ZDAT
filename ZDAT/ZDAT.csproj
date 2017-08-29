@@ -59,7 +59,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Outlook, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -113,6 +115,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="API.cs" />
+    <Compile Include="Automation\ConvertOrder.cs" />
+    <Compile Include="Automation\OrderEntry.cs" />
     <Compile Include="SendMail.cs" />
     <Compile Include="ZD.cs" />
     <Page Include="MainWindow.xaml">
@@ -131,7 +135,7 @@
   <ItemGroup>
     <Compile Include="OpenXMLReader.cs" />
     <Compile Include="PInvoke.cs" />
-    <Compile Include="Automation.cs" />
+    <Compile Include="Automation\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -149,6 +153,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
