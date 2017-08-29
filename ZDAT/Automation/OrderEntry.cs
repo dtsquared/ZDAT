@@ -1,46 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.Threading;
 using System.Windows.Forms;
 using PInvoke;
 using System.ComponentModel;
-using System.Windows.Threading;
-using System.Diagnostics;
 
 
-namespace ZDAT
+namespace ZDAT.Automation
 {
-    public class Automation
+    public class OrderEntry : Task
     {
-        public Process StartZD(string BranchNumber, string ZDPath, string UserName)
-        {
-            Process ZD = new Process();
-            ZD.StartInfo.FileName = ZDPath;
-            ZD.StartInfo.Arguments = "B" + BranchNumber + ":5632 WESNETZD";
-            ZD.Start();
-
-            return ZD;
-        }
-
-
-        public void HideZDWindow()
-        {
-            IntPtr MainhWnd = Win.GetHandle("3615 - WESNET ZD");
-            List<IntPtr> childhWnd = Win.GetChildWindows(MainhWnd);
-
-            Win.HideWindow(childhWnd[8]);
-            Win.HideWindow(childhWnd[4]);
-        }
-
-        public void NewOrderEntry(Process ZD)
-        {
-
-        }
-
         public bool EnterOrders(IEnumerable<OpenXMLReader.Order> Orders, int TotalLines, bool EDIEnabled, string Branch, BackgroundWorker worker, DoWorkEventArgs e)
         {
             #region Declarations
@@ -95,47 +64,47 @@ namespace ZDAT
                         #region Fill_Order_Header
                         if (o.PONumber != lastPO)
                         {
-                            Mouse.LeftClick(OPchildhWnd[(int)OP.OrderHeader]);
+                            Mouse.LeftClick(OPchildhWnd[OP.OrderHeader]);
 
                             do
                             {
                                 if (iCounter % 25 == 0)
                                 {
-                                    Mouse.LeftClick(OPchildhWnd[(int)OP.OrderHeader]);
+                                    Mouse.LeftClick(OPchildhWnd[OP.OrderHeader]);
                                 }
                                 Thread.Sleep(300);
                                 iCounter += 1;
                             } while (Win.IsOverlapped(OHhandle) == true);
 
                             iCounter = 1;
-                            MH.setFocus(OHchildhWnd[(int)OH.CustomerPO]);
+                            MH.setFocus(OHchildhWnd[OH.CustomerPO]);
                             Thread.Sleep(500);
-                            MH.sendString(OHchildhWnd[(int)OH.CustomerPO], lastPO);
+                            MH.sendString(OHchildhWnd[OH.CustomerPO], lastPO);
                             Thread.Sleep(500);
                             if (EDIEnabled == true)
                             {
-                                MH.setFocus(OHchildhWnd[(int)OH.EdiPO]);
+                                MH.setFocus(OHchildhWnd[OH.EdiPO]);
                                 Thread.Sleep(250);
-                                MH.sendString(OHchildhWnd[(int)OH.EdiPO], lastPO);
+                                MH.sendString(OHchildhWnd[OH.EdiPO], lastPO);
                                 Thread.Sleep(250);
-                                MH.sendKey(OHchildhWnd[(int)OH.EdiPO], Keys.Tab, true);
+                                MH.sendKey(OHchildhWnd[OH.EdiPO], Keys.Tab, true);
                                 Thread.Sleep(300);
                             }
 
-                            Mouse.LeftClick(OHchildhWnd[(int)OH.Order]);
+                            Mouse.LeftClick(OHchildhWnd[OH.Order]);
                             Thread.Sleep(300);
-                            Mouse.LeftClick(OHchildhWnd[(int)OH.Order]);
-                        #endregion Fill_Order_Header
+                            Mouse.LeftClick(OHchildhWnd[OH.Order]);
+                            #endregion Fill_Order_Header
 
                             #region Save_Order
                             Console.Write("Saving Order");
                             Phandle = IntPtr.Zero;
-                            Mouse.LeftClick(OHchildhWnd[(int)OH.Save]);
+                            Mouse.LeftClick(OHchildhWnd[OH.Save]);
                             do
                             {
                                 if (iCounter % 25 == 0)
                                 {
-                                    Mouse.LeftClick(OHchildhWnd[(int)OH.Save]);
+                                    Mouse.LeftClick(OHchildhWnd[OH.Save]);
                                 }
                                 Thread.Sleep(250);
                                 Phandle = Win.GetHandle("OEPAD");
@@ -228,7 +197,7 @@ namespace ZDAT
                                 for (int i = 0; i <= 25; i++)
                                 {
                                     Thread.Sleep(250);
-                                    if (MH.GetWindowTextRaw(OHchildhWnd[(int)OH.CustomerPO]) == "")
+                                    if (MH.GetWindowTextRaw(OHchildhWnd[OH.CustomerPO]) == "")
                                         break;
                                     Console.Write(i + ", ");
                                 }
@@ -240,13 +209,13 @@ namespace ZDAT
                             #endregion
                             #endregion
 
-                            Mouse.LeftClick(OHchildhWnd[(int)OH.OrderPad]);
+                            Mouse.LeftClick(OHchildhWnd[OH.OrderPad]);
                             do
                             {
                                 if (iCounter % 20 == 0)
                                 {
                                     Win.BringToTop(OPhandle);
-                                    Mouse.LeftClick(OHchildhWnd[(int)OH.OrderPad]);
+                                    Mouse.LeftClick(OHchildhWnd[OH.OrderPad]);
                                 }
                                 Thread.Sleep(250);
                                 iCounter += 1;
@@ -269,31 +238,31 @@ namespace ZDAT
                         else
                         {
                             #region Customer
-                            if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Customer]) == "")
+                            if (MH.GetWindowTextRaw(OPchildhWnd[OP.Customer]) == "")
                             {
                                 do
                                 {
-                                    MH.sendString(OPchildhWnd[(int)OP.Customer], o.Customer);
-                                    MH.sendKey(OPchildhWnd[(int)OP.Customer], Keys.Enter, true);
+                                    MH.sendString(OPchildhWnd[OP.Customer], o.Customer);
+                                    MH.sendKey(OPchildhWnd[OP.Customer], Keys.Enter, true);
                                     lastPO = o.PONumber;
                                     newOrder = true;
                                 }
-                                while (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Customer]) != o.Customer);
+                                while (MH.GetWindowTextRaw(OPchildhWnd[OP.Customer]) != o.Customer);
 
                                 do
                                 {
                                     if (iCounter % 10 == 0)
                                     {
-                                        MH.setFocus(OPchildhWnd[(int)OP.Customer]);
-                                        MH.sendKey(OPchildhWnd[(int)OP.Customer], Keys.Enter, true);
+                                        MH.setFocus(OPchildhWnd[OP.Customer]);
+                                        MH.sendKey(OPchildhWnd[OP.Customer], Keys.Enter, true);
                                     }
                                     Thread.Sleep(250);
                                     iCounter += 1;
-                                } while (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.ShipToDesc]) == "");
+                                } while (MH.GetWindowTextRaw(OPchildhWnd[OP.ShipToDesc]) == "");
 
-                                if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.LineIncr]) != "2")
+                                if (MH.GetWindowTextRaw(OPchildhWnd[OP.LineIncr]) != "2")
                                 {
-                                    MH.sendString(OPchildhWnd[(int)OP.LineIncr], "2");
+                                    MH.sendString(OPchildhWnd[OP.LineIncr], "2");
                                 }
                                 iCounter = 1;
                             }
@@ -303,19 +272,19 @@ namespace ZDAT
                             #endregion
 
                             #region Ship_To
-                            if (o.Area.ToString() != MH.GetWindowTextRaw(OPchildhWnd[(int)OP.ShipToNum]).ToString())
+                            if (o.Area.ToString() != MH.GetWindowTextRaw(OPchildhWnd[OP.ShipToNum]).ToString())
                             {
-                                MH.setFocus(OPchildhWnd[(int)OP.ShipToNum]);
-                                MH.sendString(OPchildhWnd[(int)OP.ShipToNum], o.Area);
-                                MH.setFocus(OPchildhWnd[(int)OP.ShipToNum]);
-                                MH.sendKey(OPchildhWnd[(int)OP.ShipToNum], Keys.Enter, true);
+                                MH.setFocus(OPchildhWnd[OP.ShipToNum]);
+                                MH.sendString(OPchildhWnd[OP.ShipToNum], o.Area);
+                                MH.setFocus(OPchildhWnd[OP.ShipToNum]);
+                                MH.sendKey(OPchildhWnd[OP.ShipToNum], Keys.Enter, true);
                                 Thread.Sleep(250);
 
                                 do
                                 {
                                     if (iCounter % 25 == 0)
                                     {
-                                        MH.sendKey(OPchildhWnd[(int)OP.ShipToNum], Keys.Enter, true);
+                                        MH.sendKey(OPchildhWnd[OP.ShipToNum], Keys.Enter, true);
                                     }
                                     Phandle = Win.GetHandle("OEPAD");
                                     iCounter += 1;
@@ -345,9 +314,9 @@ namespace ZDAT
 
                             #region Qty
                             Console.WriteLine("Entering Qty.");
-                            MH.setFocus(OPchildhWnd[(int)OP.Qty]);
-                            MH.sendString(OPchildhWnd[(int)OP.Qty], o.Qty);
-                            MH.sendKey(OPchildhWnd[(int)OP.Qty], Keys.Enter, true);
+                            MH.setFocus(OPchildhWnd[OP.Qty]);
+                            MH.sendString(OPchildhWnd[OP.Qty], o.Qty);
+                            MH.sendKey(OPchildhWnd[OP.Qty], Keys.Enter, true);
                             Thread.Sleep(250);
                             #endregion
 
@@ -364,21 +333,21 @@ namespace ZDAT
                                 Thread.Sleep(250);
                                 if (newOrder == true)
                                 {
-                                    MH.setFocus(OPchildhWnd[(int)OP.Product]);
+                                    MH.setFocus(OPchildhWnd[OP.Product]);
                                     Thread.Sleep(300);
-                                    MH.sendString(OPchildhWnd[(int)OP.Product], o.Part.PadLeft(11, '0'));
+                                    MH.sendString(OPchildhWnd[OP.Product], o.Part.PadLeft(11, '0'));
                                     Thread.Sleep(250);
-                                    MH.sendKey(OPchildhWnd[(int)OP.Product], Keys.Enter, true);
+                                    MH.sendKey(OPchildhWnd[OP.Product], Keys.Enter, true);
                                     newOrder = false;
                                 }
                                 else
                                 {
-                                    if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.ProdCode]) == "")
+                                    if (MH.GetWindowTextRaw(OPchildhWnd[OP.ProdCode]) == "")
                                     {
-                                        MH.sendString(OPchildhWnd[(int)OP.Product], o.Part);
+                                        MH.sendString(OPchildhWnd[OP.Product], o.Part);
                                     }
-                                    MH.sendString(OPchildhWnd[(int)OP.Product], o.Part);
-                                    MH.sendKey(OPchildhWnd[(int)OP.Product], Keys.Tab, true);
+                                    MH.sendString(OPchildhWnd[OP.Product], o.Part);
+                                    MH.sendKey(OPchildhWnd[OP.Product], Keys.Tab, true);
                                 }
                                 Console.Write("Waiting for product to load");
                                 iCounter = 1;
@@ -390,13 +359,13 @@ namespace ZDAT
                                     iCounter += 1;
                                     if (iCounter % 20 == 0)
                                     {
-                                        MH.setFocus(OPchildhWnd[(int)OP.Product]);
+                                        MH.setFocus(OPchildhWnd[OP.Product]);
                                         Thread.Sleep(300);
-                                        if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.ProdCode]) == "")
+                                        if (MH.GetWindowTextRaw(OPchildhWnd[OP.ProdCode]) == "")
                                         {
-                                            MH.sendString(OPchildhWnd[(int)OP.Product], o.Part);
+                                            MH.sendString(OPchildhWnd[OP.Product], o.Part);
                                         }
-                                        MH.sendKey(OPchildhWnd[(int)OP.Product], Keys.Enter, true);
+                                        MH.sendKey(OPchildhWnd[OP.Product], Keys.Enter, true);
                                     }
                                     if (Win.GetHandle(Branch + "  -  Price and Availability") != IntPtr.Zero)
                                     {
@@ -430,14 +399,14 @@ namespace ZDAT
                                             }
                                         }
                                     }
-                                } while (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Desc]) == "");
+                                } while (MH.GetWindowTextRaw(OPchildhWnd[OP.Desc]) == "");
                                 Phandle = IntPtr.Zero;
                                 iCounter = 1;
                                 Console.WriteLine();
                                 #endregion
 
                                 #region Price
-                                //Mouse.LeftClick(childhWnd[(int)OP.Price]);
+                                //Mouse.LeftClick(childhWnd[OP.Price]);
 
                                 #region Price Overrides
                                 ////////////////////
@@ -449,13 +418,13 @@ namespace ZDAT
                                 //do
                                 //{
                                 //    //Console.WriteLine("Waiting for price to be set..");
-                                //    MH.sendWMString(childhWnd[(int)OP.Price], MH.WM_SETTEXT, "0.001");
-                                //    Double.TryParse(MH.GetWindowTextRaw(childhWnd[(int)OP.Price]), out Price);
+                                //    MH.sendWMString(childhWnd[OP.Price], MH.WM_SETTEXT, "0.001");
+                                //    Double.TryParse(MH.GetWindowTextRaw(childhWnd[OP.Price]), out Price);
                                 //    Thread.Sleep(250);
                                 //} while (Price <= 0.000);
                                 #endregion
 
-                                //MH.sendKey(childhWnd[(int)OP.Price], Keys.Enter, true);
+                                //MH.sendKey(childhWnd[OP.Price], Keys.Enter, true);
                                 //Thread.Sleep(500);
                                 #endregion
 
@@ -464,7 +433,7 @@ namespace ZDAT
 
                                 // Add Date
                                 Console.WriteLine("Setting Customer Delivery Date");
-                                IntPtr CustDelDtHandle = OPchildhWnd[(int)OP.CustDelDt];
+                                IntPtr CustDelDtHandle = OPchildhWnd[OP.CustDelDt];
                                 bool dateError = true;
 
                                 for (int i = 1; i <= 30; i++)
@@ -503,21 +472,21 @@ namespace ZDAT
                                 #region Add
                                 Console.WriteLine("Adding to order.");
                                 Thread.Sleep(500);
-                                Mouse.LeftClick(OPchildhWnd[(int)OP.Add]);
+                                Mouse.LeftClick(OPchildhWnd[OP.Add]);
                                 Console.Write("Waiting for application to enter a ready state");
                                 do
                                 {
                                     Console.Write(".");
 
-                                    if (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Add]) == "Upd&ate")
+                                    if (MH.GetWindowTextRaw(OPchildhWnd[OP.Add]) == "Upd&ate")
                                     {
-                                        Mouse.LeftClick(OPchildhWnd[(int)OP.NewItem]);
+                                        Mouse.LeftClick(OPchildhWnd[OP.NewItem]);
                                         MissedLines.Add("LN: " + LineNumber + " Qty: " + o.Qty + " SIM: " + o.Part);
                                         Thread.Sleep(2000);
                                     }
                                     if (iCounter % 25 == 0)
                                     {
-                                        Mouse.LeftClick(OPchildhWnd[(int)OP.Add]);
+                                        Mouse.LeftClick(OPchildhWnd[OP.Add]);
                                     }
                                     Phandle = Win.GetHandle("OEPAD Error");
                                     if (Phandle != IntPtr.Zero)
@@ -533,7 +502,7 @@ namespace ZDAT
                                     }
                                     Thread.Sleep(500);
                                     iCounter += 1;
-                                } while (MH.GetWindowTextRaw(OPchildhWnd[(int)OP.Qty]) != "0");
+                                } while (MH.GetWindowTextRaw(OPchildhWnd[OP.Qty]) != "0");
 
                                 Console.WriteLine("\r\n");
                                 iCounter = 1;
@@ -565,34 +534,34 @@ namespace ZDAT
                 else
                 {
                     Win.BringToTop(OPhandle);
-                    Mouse.LeftClick(OPchildhWnd[(int)OP.OrderHeader]);
+                    Mouse.LeftClick(OPchildhWnd[OP.OrderHeader]);
 
                     do
                     {
                         if (iCounter % 25 == 0)
                         {
-                            Mouse.LeftClick(OPchildhWnd[(int)OP.OrderHeader]);
+                            Mouse.LeftClick(OPchildhWnd[OP.OrderHeader]);
                         }
                         Thread.Sleep(250);
                         iCounter += 1;
                     } while (Win.IsOverlapped(OHhandle) == true);
                     iCounter = 1;
 
-                    MH.setFocus(OHchildhWnd[(int)OH.CustomerPO]);
+                    MH.setFocus(OHchildhWnd[OH.CustomerPO]);
                     Thread.Sleep(500);
-                    MH.sendString(OHchildhWnd[(int)OH.CustomerPO], lastPO);
+                    MH.sendString(OHchildhWnd[OH.CustomerPO], lastPO);
                     Thread.Sleep(500);
                     if (EDIEnabled == true)
                     {
-                        MH.setFocus(OHchildhWnd[(int)OH.EdiPO]);
+                        MH.setFocus(OHchildhWnd[OH.EdiPO]);
                         Thread.Sleep(250);
-                        MH.sendString(OHchildhWnd[(int)OH.EdiPO], lastPO);
+                        MH.sendString(OHchildhWnd[OH.EdiPO], lastPO);
                         Thread.Sleep(250);
-                        MH.sendKey(OHchildhWnd[(int)OH.EdiPO], Keys.Tab, true);
+                        MH.sendKey(OHchildhWnd[OH.EdiPO], Keys.Tab, true);
                         Thread.Sleep(300);
                     }
 
-                    Mouse.LeftClick(OHchildhWnd[(int)OH.Order]);
+                    Mouse.LeftClick(OHchildhWnd[OH.Order]);
 
                     if (worker.CancellationPending)
                     {
@@ -603,12 +572,12 @@ namespace ZDAT
                         #region Save_Order
                         Console.Write("Saving Order");
                         Phandle = IntPtr.Zero;
-                        Mouse.LeftClick(OHchildhWnd[(int)OH.Save]);
+                        Mouse.LeftClick(OHchildhWnd[OH.Save]);
                         do
                         {
                             if (iCounter % 25 == 0)
                             {
-                                Mouse.LeftClick(OHchildhWnd[(int)OH.Save]);
+                                Mouse.LeftClick(OHchildhWnd[OH.Save]);
                             }
                             Thread.Sleep(250);
                             Phandle = Win.GetHandle("OEPAD");
@@ -717,14 +686,14 @@ namespace ZDAT
                         else
                         {
                             Win.BringToTop(OHhandle);
-                            Mouse.LeftClick(OHchildhWnd[(int)OH.OrderPad]);
+                            Mouse.LeftClick(OHchildhWnd[OH.OrderPad]);
                             do
                             {
                                 if (iCounter % 15 == 0)
                                 {
                                     Win.BringToTop(OHhandle);
                                     Thread.Sleep(250);
-                                    Mouse.LeftClick(OPchildhWnd[(int)OH.OrderPad]);
+                                    Mouse.LeftClick(OPchildhWnd[OH.OrderPad]);
                                 }
                                 Thread.Sleep(250);
                                 iCounter += 1;
@@ -743,235 +712,5 @@ namespace ZDAT
             }
             return true;
         } //Main
-
-        public bool ConvertEDI(MainWindow.CustomerRange custRange, BackgroundWorker worker, DoWorkEventArgs e)
-        {
-            #region Declarations
-            IntPtr hWnd = Win.GetHandle("3615 - Order Search Selection Criteria");
-            List<IntPtr> childhWnd = new List<IntPtr>();
-
-            IntPtr phWnd;
-            List<IntPtr> pchildhWnd = new List<IntPtr>();
-
-            List<SalesOrder> orderList = new List<SalesOrder>();
-            SalesOrder salesOrder = new SalesOrder();
-
-            int iCounter = 0;
-            bool dialogResult;
-            #endregion
-
-            if (hWnd != IntPtr.Zero)
-            {
-                Win.BringToTop(hWnd);
-                childhWnd = Win.GetChildWindows(hWnd);
-
-                #region Setup_OS
-                Mouse.LeftClick(childhWnd[(int)OS.itmNoneOfAbove]);
-                Thread.Sleep(250);
-
-                Mouse.LeftClick(childhWnd[(int)OS.ordsInquiries]);
-                Thread.Sleep(250);
-
-                MH.sendString(childhWnd[(int)OS.fltrCustFrom], custRange.CustFrom);
-                Thread.Sleep(250);
-
-                MH.sendString(childhWnd[(int)OS.fltrCustTo], custRange.CustTo);
-                Thread.Sleep(250);
-                #endregion
-
-                Mouse.LeftClick(childhWnd[(int)OS.Search]);
-                Thread.Sleep(500);
-
-                dialogResult = DialogHandler("LUORDSEL", "OK");
-
-                do
-                {
-                    Thread.Sleep(500);
-                    if (Win.GetHandle("LUORDSEL") != IntPtr.Zero)
-                    {
-                        phWnd = Win.GetHandle("LUORDSEL");
-                        pchildhWnd = Win.GetChildWindows(phWnd);
-
-                        for (int i = 0; i < pchildhWnd.Count; i++)
-                        {
-                            if (MH.GetWindowTextRaw(pchildhWnd[i]) == "OK")
-                            {
-                                Mouse.LeftClick(pchildhWnd[i]);
-                                //TODO:
-                                //STOP OR MOVE TO NEXT DPC
-                                //BECAUSE NO INQUIRIES WERE FOUND
-                            }
-                        }
-                    }
-                } while (Win.GetHandle("3615 - Order Search Results") == IntPtr.Zero);
-
-                Thread.Sleep(1000); //Give the window time to finish loading
-
-                hWnd = Win.GetHandle("3615 - Order Search Results");
-                childhWnd = Win.GetChildWindows(hWnd);
-
-                do
-                {
-                    salesOrder.ContractNumber = MH.GetWindowTextRaw(childhWnd[(int)OSR.ContractNo]);
-                    salesOrder.CreatedBy = MH.GetWindowTextRaw(childhWnd[(int)OSR.CreatedBy]);
-                    salesOrder.Customer = MH.GetWindowTextRaw(childhWnd[(int)OSR.Customer]);
-                    salesOrder.CustomerPO = MH.GetWindowTextRaw(childhWnd[(int)OSR.CustPO]);
-                    salesOrder.CustPartNumber = MH.GetWindowTextRaw(childhWnd[(int)OSR.CustPartNum]);
-                    salesOrder.OrderNumber = MH.GetWindowTextRaw(childhWnd[(int)OSR.OrderNum]);
-                    salesOrder.OrderStatus = MH.GetWindowTextRaw(childhWnd[(int)OSR.OrderStatus]);
-
-                    if (salesOrder.OrderStatus != "Open")
-                    {
-                        MH.sendKey(childhWnd[(int)OSR.OrderGrid], Keys.Down, true);
-                        do
-                        {
-                            Thread.Sleep(500);
-                        } while (MH.GetWindowTextRaw(childhWnd[(int)OSR.OrderStatus]) == "");
-                    }
-                } while (salesOrder.OrderStatus != "Open");
-
-                //Click manage order twice due to an issue with focus
-                //even when focus is set first clicking once does not work
-                Mouse.LeftClick(childhWnd[(int)OSR.ManageOrder]);
-
-                do
-                {
-                    Thread.Sleep(500);
-                    iCounter += 1;
-
-                    if (Win.GetHandle("3615 - Order Search Results") != hWnd)
-                    {
-                        DialogHandler("3615 - Order Search Results", "OK");
-                    }
-
-                    DialogHandler("LUORDRSLT Error", "OK");
-
-                    if (iCounter % 10 == 0)
-                    {
-                        Mouse.LeftClick(childhWnd[(int)OSR.ManageOrder]);
-                    }
-
-                } while (Win.GetHandle("3615 - Sales Order Management - " + salesOrder.OrderNumber) == IntPtr.Zero);
-                iCounter = 0;
-
-                hWnd = Win.GetHandle("3615 - Sales Order Management - " + salesOrder.OrderNumber);
-                childhWnd = Win.GetChildWindows(hWnd);
-
-                do
-                {
-                    Thread.Sleep(1000);
-                } while (MH.GetWindowTextRaw(childhWnd[(int)OP.Customer]) == "");
-
-                do
-                {
-                    Thread.Sleep(500);
-
-                    iCounter += 1;
-                    if (iCounter % 20 == 0)
-                    {
-                        break;
-                    }
-                } while (Win.GetHandle("3615 - OEPAD Warning") == IntPtr.Zero);
-                iCounter = 0;
-
-                DialogHandler("3615 - OEPAD Warning", "OK");
-
-                while (Win.GetHandle("3615 - Address Entry") == IntPtr.Zero)
-                {
-                    Thread.Sleep(500);
-                    iCounter += 1;
-                    if (iCounter % 20 == 0)
-                    {
-                        Console.WriteLine("Address Entry not found..");
-                        break;
-                    }
-                }
-                iCounter = 0;
-
-                DialogHandler("3615 - Address Entry", "&Save");
-
-                if (Win.IsChecked(childhWnd[(int)OP.SO]) == true)
-                {
-                    EMail email = new EMail();
-                    email.Send(new string[] { "treische@wesco.com" }, "C# email test", "Testing OSR program");
-
-                }
-                //lastSalesOrder = salesOrder;
-
-                //do
-                //{
-                //    MH.sendKey(childhWnd[(int)OSR.OrderGrid], Keys.Down, true);
-                //    Thread.Sleep(500);
-                //    salesOrder.ContractNumber = MH.GetWindowTextRaw(childhWnd[(int)OSR.ContractNo]);
-                //    salesOrder.CreatedBy = MH.GetWindowTextRaw(childhWnd[(int)OSR.CreatedBy]);
-                //    salesOrder.Customer = MH.GetWindowTextRaw(childhWnd[(int)OSR.Customer]);
-                //    salesOrder.CustomerPO = MH.GetWindowTextRaw(childhWnd[(int)OSR.CustPO]);
-                //    salesOrder.CustPartNumber = MH.GetWindowTextRaw(childhWnd[(int)OSR.CustPartNum]);
-                //    salesOrder.OrderNumber = MH.GetWindowTextRaw(childhWnd[(int)OSR.OrderNum]);
-                //    salesOrder.OrderStatus = MH.GetWindowTextRaw(childhWnd[(int)OSR.OrderStatus]);
-
-                //} while (lastSalesOrder.OrderNumber == salesOrder.OrderNumber);
-            }
-            else
-            {
-                return false;
-            }
-
-
-            return true;
-        }
-
-        public bool DialogHandler(string WinTitle, string ButtonText)
-        {
-            IntPtr hWnd = Win.GetHandle(WinTitle);
-            List<IntPtr> childhWnd;
-            int iCounter = 0;
-
-            if (hWnd != IntPtr.Zero)
-            {
-                Console.WriteLine("Dialog Window " + WinTitle + " found!");
-
-                childhWnd = Win.GetChildWindows(hWnd);
-
-                for (int i = 0; i < childhWnd.Count; i++)
-                {
-                    if (MH.GetWindowTextRaw(childhWnd[i]) == ButtonText)
-                    {
-                        Console.WriteLine("Button " + ButtonText + " found!");
-
-                        Mouse.LeftClick(childhWnd[i]);
-
-                        while (Win.GetHandle(WinTitle) != IntPtr.Zero)
-                        {
-                            iCounter += 1;
-                            Thread.Sleep(500);
-
-                            if (iCounter % 20 == 0)
-                            {
-                                Console.WriteLine("Attempting to click " + ButtonText + " again.");
-                                Mouse.LeftClick(childhWnd[i]);
-                            }
-                        }
-                    }
-                }
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-    } //automation class
-
-    public struct SalesOrder
-    {
-        public string Customer { get; set; }
-        public string OrderNumber { get; set; }
-        public string OrderStatus { get; set; }
-        public string CustomerPO { get; set; }
-        public string CreatedBy { get; set; }
-        public string CustPartNumber { get; set; }
-        public string ContractNumber { get; set; }
     }
 }

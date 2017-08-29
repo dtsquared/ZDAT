@@ -22,6 +22,7 @@ using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.IO;
+using ZDAT.Automation;
 
 namespace ZDAT
 {
@@ -303,7 +304,7 @@ namespace ZDAT
         private void bgWorkerEDI_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
-            Automation ae = new Automation();
+            ConvertOrder ae = new ConvertOrder();
 
             e.Result = ae.ConvertEDI(custRange, worker, e);
         }
@@ -322,7 +323,7 @@ namespace ZDAT
         private void bgWorkerSOM_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
-            Automation ae = new Automation();
+            OrderEntry ae = new OrderEntry();
 
             e.Result = ae.EnterOrders((IEnumerable<OpenXMLReader.Order>)e.Argument, LineCount, EDIEnabled, branch, worker, e);
         }
@@ -372,13 +373,13 @@ namespace ZDAT
 
         private void btnStartZD_Click(object sender, RoutedEventArgs e)
         {
-            Automation at = new Automation();
+            OrderEntry at = new OrderEntry();
             at.StartZD(txtBranch.Text, txtAcuthinPath.Text, txtUser.Text);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            Automation at = new Automation();
+            OrderEntry at = new OrderEntry();
             at.HideZDWindow();
         }
     }
