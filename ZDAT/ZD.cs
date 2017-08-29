@@ -43,9 +43,9 @@ namespace ZDAT
         public static int ShipViaDesc = 81;
         public static int ShipAcctNum = 90;
         public static int ShipInstruc = 79;
-        public static int Memo = 152;
-        public static int Inquiry = 156;
-        public static int Order = 157;
+        public static int Memo = 157;
+        public static int Inquiry = 158;
+        public static int Order = 159;
         public static int Save = 126;
         public static int Clear = 127;
         public static int Close = 134;
